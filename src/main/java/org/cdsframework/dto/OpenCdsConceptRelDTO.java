@@ -27,52 +27,44 @@
  */
 package org.cdsframework.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Date;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.cdsframework.annotation.Column;
 import org.cdsframework.annotation.Entity;
 import org.cdsframework.annotation.GeneratedValue;
 import org.cdsframework.annotation.Id;
+import org.cdsframework.annotation.Ignore;
 import org.cdsframework.annotation.JndiReference;
+import org.cdsframework.annotation.ParentChildRelationship;
+import org.cdsframework.annotation.ParentChildRelationships;
 import org.cdsframework.annotation.Permission;
 import org.cdsframework.annotation.ReferenceDTO;
 import org.cdsframework.annotation.Table;
 import org.cdsframework.aspect.annotations.PropertyListener;
 import org.cdsframework.base.BaseDTO;
+import org.cdsframework.enumeration.DeploymentEnvironment;
 import org.cdsframework.enumeration.GenerationSource;
+import org.cdsframework.enumeration.MappingType;
 
 /**
  *
  * @author HLN Consulting, LLC
  */
 @Entity
-@Table(databaseId = "CDS", name = "opencds_concept_rel")
+@ParentChildRelationships({
+    @ParentChildRelationship(childDtoClass = OpenCdsConceptDeploymentLogDTO.class, childQueryClass = OpenCdsConceptDeploymentLogDTO.ByRelationshipId.class, isAutoRetrieve = false)
+})
+@Table(databaseId = "CDS", name = "opencds_concept_rel", view = "vw_opencds_concept_rel")
 @JndiReference(root = "mts-ejb-cds")
 @Permission(name = "Concept/Code Relationship")
+@XmlRootElement(name = "ConceptRel")
 public class OpenCdsConceptRelDTO extends BaseDTO {
-
-    public enum MappingType {
-
-        CODE("Code"),
-        CODE_SYSTEM("Code System"),
-        VALUE_SET("Value Set");
-
-        private final String label;
-
-        private MappingType(String label) {
-            this.label = label;
-        }
-
-        /**
-         * Get the value of label
-         *
-         * @return the value of label
-         */
-        public String getLabel() {
-            return label;
-        }
-
-    }
 
     public interface ByOpenCdsConceptId {
     }
@@ -96,7 +88,6 @@ public class OpenCdsConceptRelDTO extends BaseDTO {
     private CdsCodeDTO cdsCodeDTO;
     @Column(name = "determination_method")
     @ReferenceDTO(isNotFoundAllowed = false)
-    @NotNull
     private ConceptDeterminationMethodDTO conceptDeterminationMethodDTO;
     @Column(name = "code_system_id")
     @ReferenceDTO(isNotFoundAllowed = false)
@@ -108,6 +99,111 @@ public class OpenCdsConceptRelDTO extends BaseDTO {
     private String specificationNotes;
     @NotNull
     private MappingType mappingType;
+    @JsonProperty    
+    @XmlTransient
+    @Ignore
+    private String oid;
+    @JsonProperty    
+    @XmlTransient
+    @Ignore
+    private String name;
+    private boolean disabled;
+    @NotNull
+    private DeploymentEnvironment deploymentEnvironment;
+    @Column(name = "last_deployed", updateable = false, insertable = false)
+    private Date lastDeployedDate;
+
+    /**
+     * Get the value of lastDeployedDate
+     *
+     * @return the value of lastDeployedDate
+     */
+    public Date getLastDeployedDate() {
+        return lastDeployedDate;
+    }
+
+    /**
+     * Set the value of lastDeployedDate
+     *
+     * @param lastDeployedDate new value of lastDeployedDate
+     */
+    public void setLastDeployedDate(Date lastDeployedDate) {
+        this.lastDeployedDate = lastDeployedDate;
+    }
+
+    /**
+     * Get the value of deploymentEnvironment
+     *
+     * @return the value of deploymentEnvironment
+     */
+    public DeploymentEnvironment getDeploymentEnvironment() {
+        return deploymentEnvironment;
+    }
+
+    /**
+     * Set the value of deploymentEnvironment
+     *
+     * @param deploymentEnvironment new value of deploymentEnvironment
+     */
+    @PropertyListener
+    public void setDeploymentEnvironment(DeploymentEnvironment deploymentEnvironment) {
+        this.deploymentEnvironment = deploymentEnvironment;
+    }
+
+    /**
+     * Get the value of disabled
+     *
+     * @return the value of disabled
+     */
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    /**
+     * Set the value of disabled
+     *
+     * @param disabled new value of disabled
+     */
+    @PropertyListener
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    /**
+     * Get the value of name
+     *
+     * @return the value of name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @param name new value of name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Get the value of oid
+     *
+     * @return the value of oid
+     */
+    public String getOid() {
+        return oid;
+    }
+
+    /**
+     * Set the value of oid
+     *
+     * @param oid new value of oid
+     */
+    public void setOid(String oid) {
+        this.oid = oid;
+    }
 
     /**
      * Get the value of valueSetDTO
@@ -178,7 +274,8 @@ public class OpenCdsConceptRelDTO extends BaseDTO {
     /**
      * Set the value of conceptDeterminationMethodDTO
      *
-     * @param conceptDeterminationMethodDTO new value of conceptDeterminationMethodDTO
+     * @param conceptDeterminationMethodDTO new value of
+     * conceptDeterminationMethodDTO
      */
     @PropertyListener
     public void setConceptDeterminationMethodDTO(ConceptDeterminationMethodDTO conceptDeterminationMethodDTO) {
@@ -259,5 +356,15 @@ public class OpenCdsConceptRelDTO extends BaseDTO {
     @PropertyListener
     public void setMappingType(MappingType mappingType) {
         this.mappingType = mappingType;
+    }
+
+    /**
+     * Get the list of OpenCdsConceptRelDTOs.
+     *
+     * @return
+     */
+    @XmlElementRef(name = "mappingDeploymentLogs")
+    public List<OpenCdsConceptDeploymentLogDTO> getOpenCdsConceptDeploymentLogDTOs() {
+        return getChildrenDTOs(OpenCdsConceptDeploymentLogDTO.ByRelationshipId.class, OpenCdsConceptDeploymentLogDTO.class);
     }
 }

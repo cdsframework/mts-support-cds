@@ -209,7 +209,7 @@ public class CdsCodeDTO extends BaseDTO {
      *
      * @return a list of CdsCodeOpenCdsConceptRelDTOs
      */
-    @XmlElementRef(name = "cdsCodeOpenCdsConceptRels")
+    @XmlElementRef(name = "cdsCodeConceptRels")
     public List<CdsCodeOpenCdsConceptRelDTO> getCdsCodeOpenCdsConceptRelDTOs() {
         return getChildrenDTOs(CdsCodeOpenCdsConceptRelDTO.ByOpenCdsCodeMapping.class, CdsCodeOpenCdsConceptRelDTO.class);
     }

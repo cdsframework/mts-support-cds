@@ -27,9 +27,12 @@
  */
 package org.cdsframework.dto;
 
+import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlRootElement;
+import org.cdsframework.annotation.Column;
 import org.cdsframework.annotation.Entity;
 import org.cdsframework.annotation.SortColumn;
 import org.cdsframework.annotation.GeneratedValue;
@@ -51,12 +54,14 @@ import org.cdsframework.util.comparator.OpenCdsConceptComparator;
  */
 @Entity
 @ParentChildRelationships({
-    @ParentChildRelationship(childDtoClass = OpenCdsConceptRelDTO.class, childQueryClass = OpenCdsConceptRelDTO.ByOpenCdsConceptId.class, isAutoRetrieve = false)
+    @ParentChildRelationship(childDtoClass = OpenCdsConceptRelDTO.class, childQueryClass = OpenCdsConceptRelDTO.ByOpenCdsConceptId.class, isAutoRetrieve = false),
+    @ParentChildRelationship(childDtoClass = OpenCdsConceptDeploymentLogDTO.class, childQueryClass = OpenCdsConceptDeploymentLogDTO.ByCodeId.class, isAutoRetrieve = false)
 })
 @OrderBy(comparator = OpenCdsConceptComparator.class, fields = "lower(code)")
-@Table(databaseId = "CDS", name = "opencds_concept")
+@Table(databaseId = "CDS", name = "opencds_concept", view = "vw_opencds_concept")
 @JndiReference(root = "mts-ejb-cds")
 @Permission(name = "Concept Code")
+@XmlRootElement(name = "Concept")
 public class OpenCdsConceptDTO extends BaseDTO {
 
     public interface ByConceptDeterminationMethod {
@@ -88,6 +93,26 @@ public class OpenCdsConceptDTO extends BaseDTO {
     @SortColumn(sortFieldValue = "lower(display_name)")
     private String displayName;
     private String description;
+    @Column(name = "last_deployed", updateable = false, insertable = false)
+    private Date lastDeployedDate;
+
+    /**
+     * Get the value of lastDeployedDate
+     *
+     * @return the value of lastDeployedDate
+     */
+    public Date getLastDeployedDate() {
+        return lastDeployedDate;
+    }
+
+    /**
+     * Set the value of lastDeployedDate
+     *
+     * @param lastDeployedDate new value of lastDeployedDate
+     */
+    public void setLastDeployedDate(Date lastDeployedDate) {
+        this.lastDeployedDate = lastDeployedDate;
+    }
 
     /**
      * Get the value of codeId
@@ -187,8 +212,18 @@ public class OpenCdsConceptDTO extends BaseDTO {
      *
      * @return
      */
-    @XmlElementRef(name = "openCdsConceptRels")
+    @XmlElementRef(name = "conceptRels")
     public List<OpenCdsConceptRelDTO> getOpenCdsConceptRelDTOs() {
         return getChildrenDTOs(OpenCdsConceptRelDTO.ByOpenCdsConceptId.class, OpenCdsConceptRelDTO.class);
+    }
+
+    /**
+     * Get the list of OpenCdsConceptRelDTOs.
+     *
+     * @return
+     */
+    @XmlElementRef(name = "conceptDeploymentLogs")
+    public List<OpenCdsConceptDeploymentLogDTO> getOpenCdsConceptDeploymentLogDTOs() {
+        return getChildrenDTOs(OpenCdsConceptDeploymentLogDTO.ByCodeId.class, OpenCdsConceptDeploymentLogDTO.class);
     }
 }

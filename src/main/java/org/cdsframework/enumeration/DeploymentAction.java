@@ -31,13 +31,14 @@ package org.cdsframework.enumeration;
  *
  * @author sdn
  */
-public enum DeploymentEnvironment {
-    TEST("Test"),
-    PRODUCTION("Production");
+public enum DeploymentAction {
+    DEPLOYED("Deployed"),
+    UNDEPLOYED("Undeployed"),
+    RETIRED("Retired");
 
     private final String label;
 
-    private DeploymentEnvironment(String label) {
+    private DeploymentAction(String label) {
         this.label = label;
     }
 
@@ -48,5 +49,16 @@ public enum DeploymentEnvironment {
      */
     public String getLabel() {
         return label;
+    }
+
+    public static DeploymentAction valueOfLabel(String label) {
+        DeploymentAction result = null;
+        for (DeploymentAction item : DeploymentAction.values()) {
+            if (item.label.equalsIgnoreCase(label)) {
+                result = item;
+                break;
+            }
+        }
+        return result;
     }
 }

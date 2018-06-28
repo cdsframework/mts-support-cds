@@ -31,13 +31,16 @@ package org.cdsframework.enumeration;
  *
  * @author sdn
  */
-public enum DeploymentEnvironment {
-    TEST("Test"),
-    PRODUCTION("Production");
+
+public enum MappingType {
+
+    CODE("Code"),
+    CODE_SYSTEM("Code System"),
+    VALUE_SET("Value Set");
 
     private final String label;
 
-    private DeploymentEnvironment(String label) {
+    private MappingType(String label) {
         this.label = label;
     }
 
@@ -49,4 +52,5 @@ public enum DeploymentEnvironment {
     public String getLabel() {
         return label;
     }
+
 }

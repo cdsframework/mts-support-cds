@@ -222,6 +222,9 @@ public class CriteriaUtils {
             result.setSelectedResourceParameter(exportResourceParameter(predicatePartImpl.getCriteriaResourceParamDTO()));
             result.setText(predicatePartImpl.getText());
 
+            result.setFunctionEnd(predicatePartImpl.isFunctionEnd());
+            result.setParameterEnd(predicatePartImpl.isParameterEnd());
+
             List<PredicatePartConceptSelection> partSelections = result.getPartSelections();
             List<? extends BasePredicatePartConceptDTO> predicatePartConceptDTOs = predicatePartImpl.getPredicatePartConceptDTOs();
             for (PredicatePartConceptInterface item : predicatePartConceptDTOs) {
@@ -713,6 +716,12 @@ public class CriteriaUtils {
             }
         } else {
             result = partAlias;
+        }
+        if (part.isParameterEnd()) {
+            result += ", ";
+        }
+        if (part.isFunctionEnd()) {
+            result += ")";
         }
         return result;
     }

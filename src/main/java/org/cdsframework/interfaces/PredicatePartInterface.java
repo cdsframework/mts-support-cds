@@ -92,4 +92,8 @@ public interface PredicatePartInterface {
 
     public String getConcatenatedConceptSelectionType(String type);
 
+    public boolean isFunctionEnd();
+
+    public boolean isParameterEnd();
+
 }

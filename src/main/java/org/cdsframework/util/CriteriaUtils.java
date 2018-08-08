@@ -725,11 +725,11 @@ public class CriteriaUtils {
         } else {
             result = partAlias;
         }
-        if (part.isParameterEnd()) {
-            result += ", ";
-        }
         if (part.isFunctionEnd()) {
             result += ")";
+        }
+        if (part.isParameterEnd()) {
+            result += ", ";
         }
         return result;
     }

@@ -96,6 +96,8 @@ public class VsacUtils {
             if (response.getStatus() == Status.OK.getStatusCode()) {
                 value = response.readEntity(String.class);
                 logger.info(METHODNAME, "Ticket Granting Ticket: ", value);
+            } else {
+                throw new MtsException("Error status code: " + response.getStatus() + " ; message = " + response.getStatusInfo().getReasonPhrase());
             }
         } catch (Exception e) {
             logger.error(METHODNAME, e);
@@ -142,8 +144,9 @@ public class VsacUtils {
             if (response.getStatus() == Status.OK.getStatusCode()) {
                 value = response.readEntity(String.class);
                 logger.info(METHODNAME, "Service Ticket: ", value);
+            } else {
+                throw new MtsException("Error status code: " + response.getStatus() + " ; message = " + response.getStatusInfo().getReasonPhrase());
             }
-
         } catch (Exception e) {
             logger.error(METHODNAME, e);
             throw new MtsException(e.getMessage());
@@ -251,6 +254,8 @@ public class VsacUtils {
             if (response.getStatus() == Status.OK.getStatusCode()) {
                 list = response.readEntity(VersionList.class);
                 logger.info("Version List count: " + (list != null ? list.getVersions().size() : "null"));
+            } else {
+                throw new MtsException("Error status code: " + response.getStatus() + " ; message = " + response.getStatusInfo().getReasonPhrase());
             }
 
         } catch (Exception e) {
@@ -316,6 +321,8 @@ public class VsacUtils {
             // If we have an http status of OK (200), parse the response...
             if (response.getStatus() == Status.OK.getStatusCode()) {
                 value = response.readEntity(RetrieveMultipleValueSetsResponse.class);
+            } else {
+                throw new MtsException("Error status code: " + response.getStatus() + " ; message = " + response.getStatusInfo().getReasonPhrase());
             }
 
         } catch (Exception e) {
@@ -363,6 +370,8 @@ public class VsacUtils {
             // If we have an http status of OK (200), parse the response...
             if (response.getStatus() == Status.OK.getStatusCode()) {
                 value = response.readEntity(RetrieveMultipleValueSetsResponse.class);
+            } else {
+                throw new MtsException("Error status code: " + response.getStatus() + " ; message = " + response.getStatusInfo().getReasonPhrase());
             }
 
         } catch (Exception e) {

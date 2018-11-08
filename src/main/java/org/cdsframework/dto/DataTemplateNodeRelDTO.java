@@ -50,7 +50,7 @@ import org.cdsframework.util.comparator.DataTemplateNodeRelComparator;
  */
 @Entity
 @OrderBy(comparator = DataTemplateNodeRelComparator.class)
-@Table(databaseId = "CDS", name = "data_template_node_rel")
+@Table(databaseId = "CDS", name = "vw_data_template_node_rel")
 @JndiReference(root = "mts-ejb-cds")
 @Permission(name = "Data Template Node Relationship", isListed = false)
 public class DataTemplateNodeRelDTO extends BaseDTO {
@@ -81,6 +81,26 @@ public class DataTemplateNodeRelDTO extends BaseDTO {
     @Size(max = 2048)
     @NotNull
     private String nodePath;
+    @Column(name = "template_class_name", updateable = false, insertable = false)
+    private String templateClassName;
+
+    /**
+     * Get the value of templateClassName
+     *
+     * @return the value of templateClassName
+     */
+    public String getTemplateClassName() {
+        return templateClassName;
+    }
+
+    /**
+     * Set the value of templateClassName
+     *
+     * @param templateClassName new value of templateClassName
+     */
+    public void setTemplateClassName(String templateClassName) {
+        this.templateClassName = templateClassName;
+    }
 
     /**
      * Get the value of nodePath

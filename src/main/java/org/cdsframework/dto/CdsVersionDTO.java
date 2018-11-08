@@ -41,7 +41,6 @@ import org.cdsframework.annotation.OrderBy;
 import org.cdsframework.annotation.ParentChildRelationship;
 import org.cdsframework.annotation.ParentChildRelationships;
 import org.cdsframework.annotation.Permission;
-import org.cdsframework.annotation.ReferenceDTO;
 import org.cdsframework.annotation.Table;
 import org.cdsframework.aspect.annotations.PropertyListener;
 import org.cdsframework.base.BaseDTO;

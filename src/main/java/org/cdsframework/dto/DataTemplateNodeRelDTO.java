@@ -83,6 +83,26 @@ public class DataTemplateNodeRelDTO extends BaseDTO {
     private String nodePath;
     @Column(name = "template_class_name", updateable = false, insertable = false)
     private String templateClassName;
+    @Column(name = "attribute_class_name", updateable = false, insertable = false)
+    private String attributeClassName;
+
+    /**
+     * Get the value of attributeClassName
+     *
+     * @return the value of attributeClassName
+     */
+    public String getAttributeClassName() {
+        return attributeClassName;
+    }
+
+    /**
+     * Set the value of attributeClassName
+     *
+     * @param attributeClassName new value of attributeClassName
+     */
+    public void setAttributeClassName(String attributeClassName) {
+        this.attributeClassName = attributeClassName;
+    }
 
     /**
      * Get the value of templateClassName

@@ -399,10 +399,15 @@ public class VsacUtils {
             logger.info(METHODNAME, "cannot translate - vsac data is null");
         } else {
             try {
-                logger.info(METHODNAME, "about to process: ", vsacData.getDescribedValueSet().getID());
+                logger.info(METHODNAME, "about to process code system: ", vsacData.getDescribedValueSet().getID());
 
                 // Get the value set from the supplied vsac data.
                 DescribedValueSet vsacValueSet = vsacData.getDescribedValueSet();
+                logger.info(METHODNAME, "about to process display name: ", vsacValueSet.getDisplayName());
+                logger.info(METHODNAME, "about to process purpose: ", vsacValueSet.getPurpose());
+                logger.info(METHODNAME, "about to process version: ", vsacValueSet.getVersion());
+                logger.info(METHODNAME, "about to process status: ", vsacValueSet.getStatus());
+                logger.info(METHODNAME, "about to process source: ", vsacValueSet.getSource());
 
                 // Translate the supplied data from vsac to a value set object. Despite the name of the 
                 // generated class (RetrieveMultipleValueSetsResponse), the data returned from the vsac
@@ -421,8 +426,8 @@ public class VsacUtils {
                 valueSetDTO.setSource(vsacValueSet.getSource());
 
                 // Add the code (concept) data from the vsac data set...
-                if (vsacData.getDescribedValueSet().getConceptList().getConcepts() != null) {
-                    for (RetrieveMultipleValueSetsResponse.DescribedValueSet.ConceptList.Concept concept : vsacData.getDescribedValueSet().getConceptList().getConcepts()) {
+                if (vsacValueSet.getConceptList().getConcepts() != null) {
+                    for (RetrieveMultipleValueSetsResponse.DescribedValueSet.ConceptList.Concept concept : vsacValueSet.getConceptList().getConcepts()) {
                         ValueSetCdsCodeRelDTO valueSetCdsCodeRelDTO = new ValueSetCdsCodeRelDTO();
                         CdsCodeDTO cdsCodeDTO = new CdsCodeDTO();
                         valueSetCdsCodeRelDTO.setCdsCodeDTO(cdsCodeDTO);
@@ -431,7 +436,10 @@ public class VsacUtils {
                         cdsCodeDTO.setDisplayName(concept.getDisplayName());
                         cdsCodeDTO.setCodeSystem(concept.getCodeSystem());
                         cdsCodeDTO.setCodeSystemName(concept.getCodeSystemName());
-                        logger.debug(METHODNAME, "Adding cds code from vsac: ", concept.getCode());
+                        logger.info(METHODNAME, "Adding concept code from vsac: ", concept.getCode());
+                        logger.info(METHODNAME, "Adding concept display name from vsac: ", concept.getDisplayName());
+                        logger.info(METHODNAME, "Adding concept code system from vsac: ", concept.getCodeSystem());
+                        logger.info(METHODNAME, "Adding concept code system name from vsac: ", concept.getCodeSystemName());
                     }
                 }
 

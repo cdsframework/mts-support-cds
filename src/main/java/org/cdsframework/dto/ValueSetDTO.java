@@ -7,23 +7,27 @@
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU
  * Lesser General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version. You should have received a copy of the GNU Lesser
- * General Public License along with this program. If not, see <http://www.gnu.org/licenses/> for more
- * details.
+ * General Public License along with this program. If not, see
+ * <http://www.gnu.org/licenses/> for more details.
  *
- * The above-named contributors (HLN Consulting, LLC) are also licensed by the New York City
- * Department of Health and Mental Hygiene, Bureau of Immunization to have (without restriction,
- * limitation, and warranty) complete irrevocable access and rights to this project.
+ * The above-named contributors (HLN Consulting, LLC) are also licensed by the
+ * New York City Department of Health and Mental Hygiene, Bureau of Immunization
+ * to have (without restriction, limitation, and warranty) complete irrevocable
+ * access and rights to this project.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; THE
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; THE
  *
- * SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING,
- * BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDERS, IF ANY, OR DEVELOPERS BE LIABLE FOR
- * ANY CLAIM, DAMAGES, OR OTHER LIABILITY OF ANY KIND, ARISING FROM, OUT OF, OR IN CONNECTION WITH
- * THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * COPYRIGHT HOLDERS, IF ANY, OR DEVELOPERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR
+ * OTHER LIABILITY OF ANY KIND, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * For more information about this software, see https://www.hln.com/services/open-source/ or send
- * correspondence to ice@hln.com.
+ * For more information about this software, see
+ * https://www.hln.com/services/open-source/ or send correspondence to
+ * ice@hln.com.
  */
 package org.cdsframework.dto;
 
@@ -31,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElementRef;
 import org.cdsframework.annotation.Entity;
 import org.cdsframework.annotation.SortColumn;
@@ -54,8 +59,8 @@ import org.cdsframework.util.comparator.CodedElementSourceComparator;
 /**
  *
  * @author HLN Consulting, LLC
-
- Loosely followed: http://wiki.hl7.org/index.php?title=Requirements-Value_Sets
+ *
+ * Loosely followed: http://wiki.hl7.org/index.php?title=Requirements-Value_Sets
  */
 @Entity
 @RefreshOnAddOrUpdate
@@ -64,7 +69,8 @@ import org.cdsframework.util.comparator.CodedElementSourceComparator;
 @JndiReference(root = "mts-ejb-cds")
 @Permission(name = "Value Set")
 @ParentChildRelationships({
-    @ParentChildRelationship(childDtoClass = ValueSetSubValueSetRelDTO.class, childQueryClass = ValueSetSubValueSetRelDTO.ByValueSetId.class, isAutoRetrieve = false),
+    @ParentChildRelationship(childDtoClass = ValueSetSubValueSetRelDTO.class, childQueryClass = ValueSetSubValueSetRelDTO.ByValueSetId.class, isAutoRetrieve = false)
+    ,
     @ParentChildRelationship(childDtoClass = ValueSetCdsCodeRelDTO.class, childQueryClass = ValueSetCdsCodeRelDTO.ByValueSetId.class, isAutoRetrieve = false)
 })
 public class ValueSetDTO extends BaseDTO implements CodedElementSource {
@@ -73,23 +79,41 @@ public class ValueSetDTO extends BaseDTO implements CodedElementSource {
 
     public interface ByOid {
     }
+
     public interface ByOidVersion {
-    }    
+    }
+
+    public interface ByOidVersionStatus {
+    }
+
+    public interface ByCodeOidVersion {
+    }
+
+    public interface ByCodeOidVersionVersionStatus {
+    }
+
     @GeneratedValue(source = GenerationSource.AUTO)
     @Id
     private String valueSetId;
     @NotNull
+    @Size(max = 256)
     private String code;
     @NotNull
     @SortColumn(sortFieldKey = "name", sortFieldValue = "lower(name)")
+    @Size(max = 256)
     private String name;
     @NotNull
+    @Size(max = 256)
     private String oid;
+    @Size(max = 2048)
     private String description;
+    @Size(max = 256)
     private String version;
+    @Size(max = 2048)
     private String versionDescription;
     private Date versionEffectiveDate;
     private Date versionExpirationDate;
+    @Size(max = 256)
     private String versionStatus;
     private ValueSetType valueSetType;
     private String source;
@@ -391,8 +415,8 @@ public class ValueSetDTO extends BaseDTO implements CodedElementSource {
 
     /**
      * Returns a standards displayable label for the value set.
-     * 
-     * @return 
+     *
+     * @return
      */
     public String getLabel() {
         String result = null;

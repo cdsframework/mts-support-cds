@@ -33,7 +33,9 @@ package org.cdsframework.util;
 
 import ihe.iti.svs._2008.RetrieveMultipleValueSetsResponse;
 import ihe.iti.svs._2008.RetrieveMultipleValueSetsResponse.DescribedValueSet;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLDecoder;
 import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -103,14 +105,16 @@ public class VsacUtils {
             } else {
                 throw new MtsException("Error status code: " + response.getStatus() + " ; message = " + response.getStatusInfo().getReasonPhrase());
             }
-        } catch (Exception e) {
+        } catch (MtsException e) {
             logger.error(METHODNAME, e);
             throw new MtsException(e.getMessage());
         } finally {
             if (response != null) {
                 response.close();
             }
-            client.close();
+            if (client != null) {
+                client.close();
+            }
         }
 
         return value;
@@ -151,14 +155,16 @@ public class VsacUtils {
             } else {
                 throw new MtsException("Error status code: " + response.getStatus() + " ; message = " + response.getStatusInfo().getReasonPhrase());
             }
-        } catch (Exception e) {
+        } catch (MtsException e) {
             logger.error(METHODNAME, e);
             throw new MtsException(e.getMessage());
         } finally {
             if (response != null) {
                 response.close();
             }
-            client.close();
+            if (client != null) {
+                client.close();
+            }
         }
 
         return value;
@@ -196,14 +202,16 @@ public class VsacUtils {
                 logger.info(METHODNAME, "profile list: ", (list == null ? "NULL" : list.toString()));
             }
 
-        } catch (Exception e) {
+        } catch (MtsException e) {
             logger.error(METHODNAME, e);
             throw new MtsException(e.getMessage());
         } finally {
             if (response != null) {
                 response.close();
             }
-            client.close();
+            if (client != null) {
+                client.close();
+            }
         }
 
         if (list != null) {
@@ -255,21 +263,27 @@ public class VsacUtils {
             }
 
             // If we have an http status of OK (200), parse the response...
-            if (response.getStatus() == Status.OK.getStatusCode()) {
+            if (response != null && response.getStatus() == Status.OK.getStatusCode()) {
                 list = response.readEntity(VersionList.class);
                 logger.info("Version List count: " + (list != null ? list.getVersions().size() : "null"));
             } else {
-                throw new MtsException("Error status code: " + response.getStatus() + " ; message = " + response.getStatusInfo().getReasonPhrase());
+                if (response != null) {
+                    throw new MtsException("Error status code: " + response.getStatus() + " ; message = " + response.getStatusInfo().getReasonPhrase());
+                } else {
+                    throw new MtsException("response was null!");
+                }
             }
 
-        } catch (Exception e) {
+        } catch (MtsException e) {
             logger.error(METHODNAME, e);
             throw new MtsException(e.getMessage());
         } finally {
             if (response != null) {
                 response.close();
             }
-            client.close();
+            if (client != null) {
+                client.close();
+            }
         }
 
         if (list != null) {
@@ -329,14 +343,16 @@ public class VsacUtils {
                 throw new MtsException("Error status code: " + response.getStatus() + " ; message = " + response.getStatusInfo().getReasonPhrase());
             }
 
-        } catch (Exception e) {
+        } catch (MtsException e) {
             logger.error(METHODNAME, e);
             throw new MtsException(e.getMessage());
         } finally {
             if (response != null) {
                 response.close();
             }
-            client.close();
+            if (client != null) {
+                client.close();
+            }
         }
 
         return value;
@@ -378,14 +394,16 @@ public class VsacUtils {
                 throw new MtsException("Error status code: " + response.getStatus() + " ; message = " + response.getStatusInfo().getReasonPhrase());
             }
 
-        } catch (Exception e) {
+        } catch (MtsException e) {
             logger.error(METHODNAME, e);
             throw new MtsException(e.getMessage());
         } finally {
             if (response != null) {
                 response.close();
             }
-            client.close();
+            if (client != null) {
+                client.close();
+            }
         }
 
         return value;
@@ -407,6 +425,25 @@ public class VsacUtils {
         ValueSetDTO valueSetDTO = null;
 
         logger.info(METHODNAME, "about to translate vsac data into value set");
+
+        // clean up profile
+        if (profile != null) {
+            try {
+                profile = URLDecoder.decode(profile, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                logger.error(METHODNAME, e);
+            }
+        }
+
+        // clean up version
+        if (version != null) {
+            try {
+                version = URLDecoder.decode(version, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                logger.error(METHODNAME, e);
+            }
+        }
+
         logger.info(METHODNAME, "profile: ", profile);
         logger.info(METHODNAME, "version: ", version);
 
@@ -429,11 +466,11 @@ public class VsacUtils {
                 // service only contains one value set.
                 // Translate the value set data from vsac...
                 valueSetDTO = new ValueSetDTO();
-                valueSetDTO.setCode(vsacValueSet.getDisplayName());
+                valueSetDTO.setCode(vsacValueSet.getID());
                 valueSetDTO.setName(vsacValueSet.getDisplayName());
                 valueSetDTO.setOid(vsacValueSet.getID());
                 valueSetDTO.setDescription(vsacValueSet.getPurpose());
-                if (StringUtils.isEmpty(version)) {
+                if ("Draft".equalsIgnoreCase(version) || StringUtils.isEmpty(version)) {
                     if (!StringUtils.isEmpty(profile)) {
                         valueSetDTO.setVersion(profile);
                         valueSetDTO.setVersionStatus("Draft");
@@ -472,5 +509,69 @@ public class VsacUtils {
         }
 
         return valueSetDTO;
+    }
+
+    /**
+     * Return existing ValueSet from a list of candidates.
+     *
+     * @param results
+     * @param version
+     * @param type
+     * @return
+     */
+    public static ValueSetDTO getExistingValueSetFromList(List<ValueSetDTO> results, String version, String type) {
+        final String METHODNAME = "getExistingValueSetFromList ";
+        ValueSetDTO existingValueSet = null;
+        logger.info(METHODNAME, "results=", results);
+        logger.info(METHODNAME, "version=", version);
+        logger.info(METHODNAME, "type=", type);
+
+        // scenario #3
+        for (ValueSetDTO resultItem : results) {
+            if (("ACTIVE".equalsIgnoreCase(resultItem.getVersionStatus()) || "PUBLISHED".equalsIgnoreCase(resultItem.getVersionStatus()))
+                    && "PUBLISHED".equalsIgnoreCase(type)
+                    && version.equalsIgnoreCase(resultItem.getVersion())) {
+                logger.info(METHODNAME, "found production and version match. scenario #3");
+                existingValueSet = resultItem;
+                break;
+            }
+        }
+
+        // scenario #2
+        if (existingValueSet == null) {
+            for (ValueSetDTO resultItem : results) {
+                if ((("ACTIVE".equalsIgnoreCase(resultItem.getVersionStatus()) && "N/A".equalsIgnoreCase(resultItem.getVersion()))
+                        || "DRAFT".equalsIgnoreCase(resultItem.getVersionStatus()))
+                        && !"DRAFT".equalsIgnoreCase(type)) {
+                    logger.info(METHODNAME, "found draft match for published. scenario #2");
+                    existingValueSet = resultItem;
+                    break;
+                }
+            }
+        }
+
+        // scenario #1
+        if (existingValueSet == null) {
+            for (ValueSetDTO resultItem : results) {
+                if ((("ACTIVE".equalsIgnoreCase(resultItem.getVersionStatus()) && "N/A".equalsIgnoreCase(resultItem.getVersion()))
+                        || "DRAFT".equalsIgnoreCase(resultItem.getVersionStatus()))
+                        && "DRAFT".equalsIgnoreCase(type)) {
+                    logger.info(METHODNAME, "found draft match for draft. scenario #1");
+                    existingValueSet = resultItem;
+                    break;
+                }
+            }
+        }
+
+        if (existingValueSet != null) {
+            logger.info(METHODNAME, "existingValueSet.getName()=", existingValueSet.getName());
+            logger.info(METHODNAME, "existingValueSet.getOid()=", existingValueSet.getOid());
+            logger.info(METHODNAME, "existingValueSet.getCode()=", existingValueSet.getCode());
+            logger.info(METHODNAME, "existingValueSet.getDescription()=", existingValueSet.getDescription());
+            logger.info(METHODNAME, "existingValueSet.getVersion()=", existingValueSet.getVersion());
+            logger.info(METHODNAME, "existingValueSet.getVersionStatus()=", existingValueSet.getVersionStatus());
+            logger.info(METHODNAME, "existingValueSet.getVersionDescription()=", existingValueSet.getVersionDescription());
+        }
+        return existingValueSet;
     }
 }

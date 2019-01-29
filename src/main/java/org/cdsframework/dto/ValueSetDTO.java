@@ -82,6 +82,16 @@ public class ValueSetDTO extends BaseDTO implements CodedElementSource {
 
     public interface ByOidVersion {
     }
+
+    public interface ByOidVersionStatus {
+    }
+
+    public interface ByCodeOidVersion {
+    }
+
+    public interface ByCodeOidVersionVersionStatus {
+    }
+
     @GeneratedValue(source = GenerationSource.AUTO)
     @Id
     private String valueSetId;

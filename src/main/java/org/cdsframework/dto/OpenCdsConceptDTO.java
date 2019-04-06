@@ -82,6 +82,9 @@ public class OpenCdsConceptDTO extends BaseDTO {
     public interface ByOpenCdsVaccineGroupMapping {
     }
 
+    public interface ByConditionId {
+    }
+
     private static final long serialVersionUID = 8045263279127939378L;
     @GeneratedValue(source = GenerationSource.AUTO)
     @Id

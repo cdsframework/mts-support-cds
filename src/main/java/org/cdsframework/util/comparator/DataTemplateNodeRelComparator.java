@@ -47,16 +47,15 @@ public class DataTemplateNodeRelComparator implements Comparator<DataTemplateNod
         if (o1 != null && o2 == null) {
             return 1;
         }
-        if (o1.getDataModelClassNodeDTO() == null && o2.getDataModelClassNodeDTO() == null) {
+        if (o1.getTemplateClassName()== null && o2.getTemplateClassName() == null) {
             return 0;
         }
-        if (o1.getDataModelClassNodeDTO() == null && o2.getDataModelClassNodeDTO() != null) {
+        if (o1.getTemplateClassName() == null && o2.getTemplateClassName() != null) {
             return -1;
         }
-        if (o1.getDataModelClassNodeDTO() != null && o2.getDataModelClassNodeDTO() == null) {
+        if (o1.getTemplateClassName() != null && o2.getTemplateClassName() == null) {
             return 1;
         }
-        return new DataModelClassNodeComparator().compare(o1.getDataModelClassNodeDTO(), o1.getDataModelClassNodeDTO());
+        return o1.getTemplateClassName().compareTo(o1.getTemplateClassName());
     }
-
 }

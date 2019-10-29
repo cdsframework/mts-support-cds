@@ -34,9 +34,9 @@ import javax.xml.bind.annotation.XmlElementRef;
 import org.cdsframework.annotation.Column;
 import org.cdsframework.annotation.ReferenceDTO;
 import org.cdsframework.aspect.annotations.PropertyListener;
-import org.cdsframework.dto.CriteriaDataTemplateRelNodeDTO;
 import org.cdsframework.dto.CriteriaPredicatePartDTO;
 import org.cdsframework.dto.CriteriaPredicatePartRelDTO;
+import org.cdsframework.dto.DataTemplateNodeRelDTO;
 import org.cdsframework.enumeration.ConceptSelectionType;
 import org.cdsframework.enumeration.CriteriaResourceType;
 import org.cdsframework.enumeration.DataModelClassType;
@@ -142,12 +142,12 @@ public abstract class BasePredicateSourcePartDTO extends BasePredicatePartDTO {
         return result;
     }
 
-    @XmlElementRef(name = "criteriaDataTemplateRelNode")
+    @XmlElementRef(name = "dataTemplateNodeRel")
     @Override
-    public CriteriaDataTemplateRelNodeDTO getCriteriaDataTemplateRelNodeDTO() {
-        CriteriaDataTemplateRelNodeDTO result = null;
+    public DataTemplateNodeRelDTO getDataTemplateNodeRelDTO() {
+        DataTemplateNodeRelDTO result = null;
         if (sourcePredicatePartDTO != null) {
-            result = sourcePredicatePartDTO.getCriteriaDataTemplateRelNodeDTO();
+            result = sourcePredicatePartDTO.getDataTemplateNodeRelDTO();
         }
         return result;
     }

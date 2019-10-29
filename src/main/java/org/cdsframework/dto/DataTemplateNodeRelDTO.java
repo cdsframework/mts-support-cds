@@ -36,7 +36,6 @@ import org.cdsframework.annotation.Id;
 import org.cdsframework.annotation.JndiReference;
 import org.cdsframework.annotation.OrderBy;
 import org.cdsframework.annotation.Permission;
-import org.cdsframework.annotation.ReferenceDTO;
 import org.cdsframework.annotation.Table;
 import org.cdsframework.aspect.annotations.PropertyListener;
 import org.cdsframework.base.BaseDTO;
@@ -63,12 +62,6 @@ public class DataTemplateNodeRelDTO extends BaseDTO {
     @GeneratedValue(source = GenerationSource.AUTO)
     @Id
     private String nodeId;
-    @GeneratedValue(source = GenerationSource.FOREIGN_CONSTRAINT, sourceClass = DataTemplateDTO.class)
-    private String templateId;
-    @NotNull
-    @ReferenceDTO(isNotFoundAllowed = false)
-    @Column(name = "source_node_id")
-    private DataModelClassNodeDTO dataModelClassNodeDTO;
     private boolean mandatory;
     private ConformanceType conformanceType;
     private boolean fixedValue;
@@ -139,44 +132,6 @@ public class DataTemplateNodeRelDTO extends BaseDTO {
     @PropertyListener
     public void setNodePath(String nodePath) {
         this.nodePath = nodePath;
-    }
-
-    /**
-     * Get the value of dataModelClassNodeDTO
-     *
-     * @return the value of dataModelClassNodeDTO
-     */
-    public DataModelClassNodeDTO getDataModelClassNodeDTO() {
-        return dataModelClassNodeDTO;
-    }
-
-    /**
-     * Set the value of dataModelClassNodeDTO
-     *
-     * @param dataModelClassNodeDTO new value of dataModelClassNodeDTO
-     */
-    @PropertyListener
-    public void setDataModelClassNodeDTO(DataModelClassNodeDTO dataModelClassNodeDTO) {
-        this.dataModelClassNodeDTO = dataModelClassNodeDTO;
-    }
-
-    /**
-     * Get the value of templateId
-     *
-     * @return the value of templateId
-     */
-    public String getTemplateId() {
-        return templateId;
-    }
-
-    /**
-     * Set the value of templateId
-     *
-     * @param templateId new value of templateId
-     */
-    @PropertyListener
-    public void setTemplateId(String templateId) {
-        this.templateId = templateId;
     }
 
     /**

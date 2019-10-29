@@ -84,7 +84,7 @@ public class CriteriaPredicatePartDTO extends BasePredicatePartDTO {
     private PredicatePartType partType;
     @ReferenceDTO
     @Column(name = "node_rel_id")
-    private CriteriaDataTemplateRelNodeDTO criteriaDataTemplateRelNodeDTO;
+    private DataTemplateNodeRelDTO dataTemplateNodeRelDTO;
     @NotNull
     private int predicatePartOrder;
     private ConceptSelectionType conceptSelectionType;
@@ -193,23 +193,23 @@ public class CriteriaPredicatePartDTO extends BasePredicatePartDTO {
     }
 
     /**
-     * Get the value of criteriaDataTemplateRelNodeDTO
+     * Get the value of dataTemplateNodeRelDTO
      *
-     * @return the value of criteriaDataTemplateRelNodeDTO
+     * @return the value of dataTemplateNodeRelDTO
      */
     @Override
-    public CriteriaDataTemplateRelNodeDTO getCriteriaDataTemplateRelNodeDTO() {
-        return criteriaDataTemplateRelNodeDTO;
+    public DataTemplateNodeRelDTO getDataTemplateNodeRelDTO() {
+        return dataTemplateNodeRelDTO;
     }
 
     /**
-     * Set the value of criteriaDataTemplateRelNodeDTO
+     * Set the value of dataTemplateNodeRelDTO
      *
-     * @param criteriaDataTemplateRelNodeDTO new value of criteriaDataTemplateRelNodeDTO
+     * @param criteriaDataTemplateRelNodeDTO new value of dataTemplateNodeRelDTO
      */
     @PropertyListener
-    public void setCriteriaDataTemplateRelNodeDTO(CriteriaDataTemplateRelNodeDTO criteriaDataTemplateRelNodeDTO) {
-        this.criteriaDataTemplateRelNodeDTO = criteriaDataTemplateRelNodeDTO;
+    public void setDataTemplateNodeRelDTO(DataTemplateNodeRelDTO dataTemplateNodeRelDTO) {
+        this.dataTemplateNodeRelDTO = dataTemplateNodeRelDTO;
     }
 
     /**

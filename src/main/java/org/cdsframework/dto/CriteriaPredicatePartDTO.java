@@ -83,13 +83,34 @@ public class CriteriaPredicatePartDTO extends BasePredicatePartDTO {
     @NotNull
     private PredicatePartType partType;
     @ReferenceDTO
-    @Column(name = "node_rel_id")
-    private DataTemplateNodeRelDTO dataTemplateNodeRelDTO;
+    @Column(name = "node_id")
+    private DataInputNodeDTO dataInputNodeDTO;
     @NotNull
     private int predicatePartOrder;
     private ConceptSelectionType conceptSelectionType;
     private DataModelClassType dataInputClassType;
     private CriteriaResourceType resourceType;
+    @Size(max = 2048)
+    private String nodeLabel;
+
+    /**
+     * Get the value of nodeLabel
+     *
+     * @return the value of nodeLabel
+     */
+    public String getNodeLabel() {
+        return nodeLabel;
+    }
+
+    /**
+     * Set the value of nodeLabel
+     *
+     * @param nodeLabel new value of nodeLabel
+     */
+    @PropertyListener
+    public void setNodeLabel(String nodeLabel) {
+        this.nodeLabel = nodeLabel;
+    }
 
     /**
      * Get the value of resourceType
@@ -193,23 +214,23 @@ public class CriteriaPredicatePartDTO extends BasePredicatePartDTO {
     }
 
     /**
-     * Get the value of dataTemplateNodeRelDTO
+     * Get the value of dataInputNodeDTO
      *
-     * @return the value of dataTemplateNodeRelDTO
+     * @return the value of dataInputNodeDTO
      */
     @Override
-    public DataTemplateNodeRelDTO getDataTemplateNodeRelDTO() {
-        return dataTemplateNodeRelDTO;
+    public DataInputNodeDTO getDataInputNodeDTO() {
+        return dataInputNodeDTO;
     }
 
     /**
-     * Set the value of dataTemplateNodeRelDTO
+     * Set the value of dataInputNodeDTO
      *
-     * @param criteriaDataTemplateRelNodeDTO new value of dataTemplateNodeRelDTO
+     * @param dataInputNodeDTO new value of dataInputNodeDTO
      */
     @PropertyListener
-    public void setDataTemplateNodeRelDTO(DataTemplateNodeRelDTO dataTemplateNodeRelDTO) {
-        this.dataTemplateNodeRelDTO = dataTemplateNodeRelDTO;
+    public void setDataInputNodeDTO(DataInputNodeDTO dataInputNodeDTO) {
+        this.dataInputNodeDTO = dataInputNodeDTO;
     }
 
     /**

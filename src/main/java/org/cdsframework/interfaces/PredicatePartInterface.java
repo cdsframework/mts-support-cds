@@ -34,7 +34,7 @@ import org.cdsframework.base.BasePredicatePartConceptDTO;
 import org.cdsframework.dto.CriteriaPredicatePartRelDTO;
 import org.cdsframework.dto.CriteriaResourceDTO;
 import org.cdsframework.dto.CriteriaResourceParamDTO;
-import org.cdsframework.dto.DataTemplateNodeRelDTO;
+import org.cdsframework.dto.DataInputNodeDTO;
 import org.cdsframework.enumeration.ConceptSelectionType;
 import org.cdsframework.enumeration.CriteriaResourceType;
 import org.cdsframework.enumeration.DataModelClassType;
@@ -70,7 +70,11 @@ public interface PredicatePartInterface {
 
     public List<CriteriaPredicatePartRelDTO> getPredicatePartRelDTOs();
 
-    public DataTemplateNodeRelDTO getDataTemplateNodeRelDTO();
+    public String getNodePath();
+
+    public String getNodeLabel();
+
+    public DataInputNodeDTO getDataInputNodeDTO();
 
     public CriteriaResourceDTO getCriteriaResourceDTO();
 

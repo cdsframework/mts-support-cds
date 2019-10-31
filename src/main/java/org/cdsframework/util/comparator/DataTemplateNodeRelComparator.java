@@ -28,16 +28,16 @@
 package org.cdsframework.util.comparator;
 
 import java.util.Comparator;
-import org.cdsframework.dto.DataTemplateNodeRelDTO;
+import org.cdsframework.dto.DataInputNodeDTO;
 
 /**
  *
  * @author HLN Consulting, LLC
  */
-public class DataTemplateNodeRelComparator implements Comparator<DataTemplateNodeRelDTO> {
+public class DataTemplateNodeRelComparator implements Comparator<DataInputNodeDTO> {
 
     @Override
-    public int compare(DataTemplateNodeRelDTO o1, DataTemplateNodeRelDTO o2) {
+    public int compare(DataInputNodeDTO o1, DataInputNodeDTO o2) {
         if (o1 == null && o2 == null) {
             return 0;
         }

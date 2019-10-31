@@ -29,7 +29,6 @@ package org.cdsframework.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.cdsframework.annotation.Column;
 import org.cdsframework.annotation.Entity;
 import org.cdsframework.annotation.GeneratedValue;
 import org.cdsframework.annotation.Id;
@@ -39,7 +38,6 @@ import org.cdsframework.annotation.Permission;
 import org.cdsframework.annotation.Table;
 import org.cdsframework.aspect.annotations.PropertyListener;
 import org.cdsframework.base.BaseDTO;
-import org.cdsframework.enumeration.ConformanceType;
 import org.cdsframework.enumeration.GenerationSource;
 import org.cdsframework.util.comparator.DataTemplateNodeRelComparator;
 
@@ -49,10 +47,10 @@ import org.cdsframework.util.comparator.DataTemplateNodeRelComparator;
  */
 @Entity
 @OrderBy(comparator = DataTemplateNodeRelComparator.class)
-@Table(databaseId = "CDS", name = "data_template_node_rel", view = "vw_data_template_node_rel")
+@Table(databaseId = "CDS", name = "data_input_node")
 @JndiReference(root = "mts-ejb-cds")
 @Permission(name = "Data Template Node Relationship", isListed = false)
-public class DataTemplateNodeRelDTO extends BaseDTO {
+public class DataInputNodeDTO extends BaseDTO {
 
     private static final long serialVersionUID = 8260365417310511301L;
 
@@ -62,22 +60,60 @@ public class DataTemplateNodeRelDTO extends BaseDTO {
     @GeneratedValue(source = GenerationSource.AUTO)
     @Id
     private String nodeId;
-    private boolean mandatory;
-    private ConformanceType conformanceType;
-    private boolean fixedValue;
-    private boolean adHoc;
-    @Column(name = "class_constraints")
-    @Size(max = 2048)
-    private String constraints;
-    @Size(max = 2048)
-    private String comments;
     @Size(max = 2048)
     @NotNull
     private String nodePath;
-    @Column(name = "template_class_name", updateable = false, insertable = false)
+    @Size(max = 512)
+    @NotNull
+    private String templateName;
+    @Size(max = 1024)
+    @NotNull
     private String templateClassName;
-    @Column(name = "attribute_class_name", updateable = false, insertable = false)
+    @Size(max = 512)
+    @NotNull
+    private String attributeName;
+    @Size(max = 1024)
+    @NotNull
     private String attributeClassName;
+
+    /**
+     * Get the value of attributeName
+     *
+     * @return the value of attributeName
+     */
+    public String getAttributeName() {
+        return attributeName;
+    }
+
+    /**
+     * Set the value of attributeName
+     *
+     * @param attributeName new value of attributeName
+     */
+    @PropertyListener
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
+    }
+
+
+    /**
+     * Get the value of templateName
+     *
+     * @return the value of templateName
+     */
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    /**
+     * Set the value of templateName
+     *
+     * @param templateName new value of templateName
+     */
+    @PropertyListener
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
+    }
 
     /**
      * Get the value of attributeClassName
@@ -93,6 +129,7 @@ public class DataTemplateNodeRelDTO extends BaseDTO {
      *
      * @param attributeClassName new value of attributeClassName
      */
+    @PropertyListener
     public void setAttributeClassName(String attributeClassName) {
         this.attributeClassName = attributeClassName;
     }
@@ -111,6 +148,7 @@ public class DataTemplateNodeRelDTO extends BaseDTO {
      *
      * @param templateClassName new value of templateClassName
      */
+    @PropertyListener
     public void setTemplateClassName(String templateClassName) {
         this.templateClassName = templateClassName;
     }
@@ -153,117 +191,4 @@ public class DataTemplateNodeRelDTO extends BaseDTO {
         this.nodeId = nodeId;
     }
 
-    /**
-     * Get the value of comments
-     *
-     * @return the value of comments
-     */
-    public String getComments() {
-        return comments;
-    }
-
-    /**
-     * Set the value of comments
-     *
-     * @param comments new value of comments
-     */
-    @PropertyListener
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    /**
-     * Get the value of constraints
-     *
-     * @return the value of constraints
-     */
-    public String getConstraints() {
-        return constraints;
-    }
-
-    /**
-     * Set the value of constraints
-     *
-     * @param constraints new value of constraints
-     */
-    @PropertyListener
-    public void setConstraints(String constraints) {
-        this.constraints = constraints;
-    }
-
-    /**
-     * Get the value of adHoc
-     *
-     * @return the value of adHoc
-     */
-    public boolean isAdHoc() {
-        return adHoc;
-    }
-
-    /**
-     * Set the value of adHoc
-     *
-     * @param adHoc new value of adHoc
-     */
-    @PropertyListener
-    public void setAdHoc(boolean adHoc) {
-        this.adHoc = adHoc;
-    }
-
-    /**
-     * Get the value of fixedValue
-     *
-     * @return the value of fixedValue
-     */
-    public boolean isFixedValue() {
-        return fixedValue;
-    }
-
-    /**
-     * Set the value of fixedValue
-     *
-     * @param fixedValue new value of fixedValue
-     */
-    @PropertyListener
-    public void setFixedValue(boolean fixedValue) {
-        this.fixedValue = fixedValue;
-    }
-
-    /**
-     * Get the value of conformanceType
-     *
-     * @return the value of conformanceType
-     */
-    public ConformanceType getConformanceType() {
-        return conformanceType;
-    }
-
-    /**
-     * Set the value of conformanceType
-     *
-     * @param conformanceType new value of conformanceType
-     */
-    @PropertyListener
-    public void setConformanceType(ConformanceType conformanceType) {
-        this.conformanceType = conformanceType;
-    }
-
-    /**
-     * Get the value of mandatory
-     *
-     * @return the value of mandatory
-     */
-    public boolean isMandatory() {
-        return mandatory;
-    }
-
-    /**
-     * Set the value of mandatory
-     *
-     * @param mandatory new value of mandatory
-     */
-    @PropertyListener
-    public void setMandatory(boolean mandatory) {
-        this.mandatory = mandatory;
-    }
 }

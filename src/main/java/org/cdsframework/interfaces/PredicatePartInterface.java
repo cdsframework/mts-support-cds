@@ -31,10 +31,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import org.cdsframework.base.BasePredicatePartConceptDTO;
-import org.cdsframework.dto.CriteriaDataTemplateRelNodeDTO;
 import org.cdsframework.dto.CriteriaPredicatePartRelDTO;
 import org.cdsframework.dto.CriteriaResourceDTO;
 import org.cdsframework.dto.CriteriaResourceParamDTO;
+import org.cdsframework.dto.DataInputNodeDTO;
 import org.cdsframework.enumeration.ConceptSelectionType;
 import org.cdsframework.enumeration.CriteriaResourceType;
 import org.cdsframework.enumeration.DataModelClassType;
@@ -70,7 +70,11 @@ public interface PredicatePartInterface {
 
     public List<CriteriaPredicatePartRelDTO> getPredicatePartRelDTOs();
 
-    public CriteriaDataTemplateRelNodeDTO getCriteriaDataTemplateRelNodeDTO();
+    public String getNodePath();
+
+    public String getNodeLabel();
+
+    public DataInputNodeDTO getDataInputNodeDTO();
 
     public CriteriaResourceDTO getCriteriaResourceDTO();
 

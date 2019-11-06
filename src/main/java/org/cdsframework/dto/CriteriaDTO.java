@@ -63,9 +63,6 @@ import org.cdsframework.util.comparator.CriteriaPredicateComparator;
             comparatorClass = CriteriaPredicateComparator.class),
     @ParentChildRelationship(childDtoClass = CriteriaVersionRelDTO.class,
             childQueryClass = CriteriaVersionRelDTO.ByCriteriaId.class,
-            isAutoRetrieve = false),
-    @ParentChildRelationship(childDtoClass = CriteriaDataTemplateRelDTO.class,
-            childQueryClass = CriteriaDataTemplateRelDTO.ByCriteriaId.class,
             isAutoRetrieve = false)
 })
 @Table(databaseId = "CDS", name = "criteria")
@@ -219,11 +216,6 @@ public class CriteriaDTO extends BaseDTO implements CriteriaInterface {
     @XmlElementRef(name = "predicates")
     public List<CriteriaPredicateDTO> getCriteriaPredicateDTOs() {
         return getChildrenDTOs(CriteriaPredicateDTO.ByCriteriaId.class, CriteriaPredicateDTO.class);
-    }
-
-    @XmlElementRef(name = "criteriaDataTemplateRels")
-    public List<CriteriaDataTemplateRelDTO> getCriteriaDataTemplateRelDTOs() {
-        return getChildrenDTOs(CriteriaDataTemplateRelDTO.ByCriteriaId.class, CriteriaDataTemplateRelDTO.class);
     }
 
     @Override

@@ -85,6 +85,15 @@ public abstract class BasePredicatePartDTO extends BaseDTO implements PredicateP
     private boolean functionEnd;
 
     /**
+     * Get the value of nodePath
+     *
+     * @return the value of nodeLabel
+     */
+    public String getNodePath() {
+        return String.format("%s.%s", getNodeLabel(), getDataInputNodeDTO().getNodePath());
+    }
+
+    /**
      * Get the value of functionEnd
      *
      * @return the value of functionEnd

@@ -346,11 +346,11 @@ public class CriteriaUtils {
         }
 
         CriteriaPredicateType predicateType = sourcePredicateDTO.getPredicateType();
-        logger.debug(METHODNAME, "predicateType=", predicateType);
+        logger.info(METHODNAME, "predicateType=", predicateType);
 
         if (predicateType == CriteriaPredicateType.Predicate) {
-            logger.debug(METHODNAME, "========================================================================");
-            logger.debug(METHODNAME, "baseSourcePredicateDTO.getLabel()=", baseSourcePredicateDTO.getLabel());
+            logger.info(METHODNAME, "========================================================================");
+            logger.info(METHODNAME, "baseSourcePredicateDTO.getLabel()=", baseSourcePredicateDTO.getLabel());
             Map<DetectedModelElementType, List<Object>> detectedModelElementTypeMap = null;
             DetectedModelElementType detectedModelElementType = null;
             List<? extends BasePredicatePartConceptDTO> concepts = null;
@@ -361,34 +361,34 @@ public class CriteriaUtils {
 
             for (BasePredicateSourcePartDTO basePredicateSourcePartDTO : basePredicatePartDTOs) {
                 if (basePredicateSourcePartDTO != null) {
-                    logger.debug(METHODNAME, "------------------------------------------------------------------------");
-                    logger.debug(METHODNAME, "basePredicateSourcePartDTO.getLabel()=", basePredicateSourcePartDTO.getLabel());
+                    logger.info(METHODNAME, "------------------------------------------------------------------------");
+                    logger.info(METHODNAME, "basePredicateSourcePartDTO.getLabel()=", basePredicateSourcePartDTO.getLabel());
                     CriteriaPredicatePartDTO sourcePredicatePartDTO = basePredicateSourcePartDTO.getSourcePredicatePartDTO();
                     if (sourcePredicatePartDTO != null) {
                         PredicatePartType partType = sourcePredicatePartDTO.getPartType();
-                        logger.debug(METHODNAME, "partType=", partType);
-                        logger.debug(METHODNAME, "detectedModelElementTypeMap=", detectedModelElementTypeMap);
-                        logger.debug(METHODNAME, "clinicalStatementMap=", clinicalStatementMap);
+                        logger.info(METHODNAME, "partType=", partType);
+                        logger.info(METHODNAME, "detectedModelElementTypeMap=", detectedModelElementTypeMap);
+                        logger.info(METHODNAME, "clinicalStatementMap=", clinicalStatementMap);
                         if (partType == PredicatePartType.ModelElement) {
-                            logger.debug(METHODNAME, "processing ModelElement type!");
+                            logger.info(METHODNAME, "processing ModelElement type!");
                             String nodeLabel = sourcePredicatePartDTO.getNodeLabel();
-                            logger.debug(METHODNAME, "nodeLabel=", nodeLabel);
+                            logger.info(METHODNAME, "nodeLabel=", nodeLabel);
                             if (nodeLabel != null) {
-                                detectedModelElementTypeMap = getCriteriaDataTemplateModelElementTypeMap(nodeLabel, clinicalStatementMap);
-                                logger.debug(METHODNAME, "detectedModelElementTypeMap=", detectedModelElementTypeMap);
+                                detectedModelElementTypeMap = CriteriaUtils.getDetectedModelElementTypeMap(nodeLabel, clinicalStatementMap);
+                                logger.info(METHODNAME, "detectedModelElementTypeMap=", detectedModelElementTypeMap);
 
                                 DataInputNodeDTO dataInputNodeDTO = sourcePredicatePartDTO.getDataInputNodeDTO();
 
                                 if (dataInputNodeDTO != null) {
-                                    logger.debug(METHODNAME, "dataInputNodeDTO.getNodePath()=", dataInputNodeDTO.getNodePath());
+                                    logger.info(METHODNAME, "dataInputNodeDTO.getNodePath()=", dataInputNodeDTO.getNodePath());
 
                                     if (detectedModelElementTypeMap == null) {
                                         if (dataInputNodeDTO.getNodePath() != null) {
 
-                                            detectedModelElementTypeMap = getDataTemplateModelElementTypeMap(dataInputNodeDTO, clinicalStatementMap);
-                                            logger.debug(METHODNAME, "detectedModelElementTypeMap=", detectedModelElementTypeMap);
+                                            detectedModelElementTypeMap = getDetectedModelElementTypeMap(dataInputNodeDTO, clinicalStatementMap);
+                                            logger.info(METHODNAME, "detectedModelElementTypeMap=", detectedModelElementTypeMap);
 
-                                            logger.debug(METHODNAME, "found ModelElement: ", dataInputNodeDTO.getNodePath(), " - looking for root class");
+                                            logger.info(METHODNAME, "found ModelElement: ", dataInputNodeDTO.getNodePath(), " - looking for root class");
                                         } else {
                                             logger.error(METHODNAME, "dataInputNodeDTO.getNodePath() is null!");
                                         }
@@ -397,7 +397,7 @@ public class CriteriaUtils {
                                     detectedModelElementType = geDetectedModelElementType(dataInputNodeDTO);
 
                                     if (detectedModelElementType != null) {
-                                        logger.debug(METHODNAME, "found match for detectedModelElementType: ", detectedModelElementType);
+                                        logger.info(METHODNAME, "found match for detectedModelElementType: ", detectedModelElementType);
                                     } else {
                                         logger.info(METHODNAME, "dataInputNodeDTO.getTemplateName()=", dataInputNodeDTO.getTemplateName());
                                         logger.info(METHODNAME, "dataInputNodeDTO.getTemplateClassName()=", dataInputNodeDTO.getTemplateClassName());
@@ -409,12 +409,12 @@ public class CriteriaUtils {
                                     logger.error(METHODNAME, "dataInputNodeDTO is null!");
                                 }
                             } else {
-                                logger.debug(METHODNAME, "nodeLabel is null!");
+                                logger.info(METHODNAME, "nodeLabel is null!");
                             }
                         } else if (partType == PredicatePartType.DataInput) {
-                            logger.debug(METHODNAME, "processing DataInput type!");
+                            logger.info(METHODNAME, "processing DataInput type!");
                             DataModelClassType dataInputClassType = sourcePredicatePartDTO.getDataInputClassType();
-                            logger.debug(METHODNAME, "dataInputClassType=", dataInputClassType);
+                            logger.info(METHODNAME, "dataInputClassType=", dataInputClassType);
                             if (dataInputClassType != null) {
                                 switch (dataInputClassType) {
                                     case Quantity:
@@ -440,7 +440,7 @@ public class CriteriaUtils {
                                         break;
                                 }
                             } else {
-                                logger.debug(METHODNAME, "DataInput type but dataInputClassType is null!");
+                                logger.info(METHODNAME, "DataInput type but dataInputClassType is null!");
                             }
                         }
                     } else {
@@ -451,17 +451,17 @@ public class CriteriaUtils {
                 }
             }
 
-            logger.debug(METHODNAME, "~~~~~~~~~~~~~~~~~~part iteration result~~~~~~~~~~~~~~~~~~~~~");
-            logger.debug(METHODNAME, "detectedModelElementTypeMap=", detectedModelElementTypeMap);
-            logger.debug(METHODNAME, "detectedModelElementType=", detectedModelElementType);
-            logger.debug(METHODNAME, "quantity=", quantity);
-            logger.debug(METHODNAME, "time=", time);
-            logger.debug(METHODNAME, "concepts=", concepts);
-            logger.debug(METHODNAME, "~~~~~~~~~~~~~~~~~~~~part iteration end~~~~~~~~~~~~~~~~~~~~~~");
+            logger.info(METHODNAME, "~~~~~~~~~~~~~~~~~~part iteration result~~~~~~~~~~~~~~~~~~~~~");
+            logger.info(METHODNAME, "detectedModelElementTypeMap=", detectedModelElementTypeMap);
+            logger.info(METHODNAME, "detectedModelElementType=", detectedModelElementType);
+            logger.info(METHODNAME, "quantity=", quantity);
+            logger.info(METHODNAME, "time=", time);
+            logger.info(METHODNAME, "concepts=", concepts);
+            logger.info(METHODNAME, "~~~~~~~~~~~~~~~~~~~~part iteration end~~~~~~~~~~~~~~~~~~~~~~");
 
-            if (logger.isDebugEnabled()) {
-                logResult(concepts, quantity, time);
-            }
+            //if (logger.isDebugEnabled()) {
+            logResult(concepts, quantity, time);
+            //}
             if (detectedModelElementTypeMap != null && detectedModelElementType != null && ((concepts != null && !concepts.isEmpty()) || quantity != null || time != null)) {
                 int i = 0;
                 if (concepts != null && !concepts.isEmpty()) {
@@ -483,20 +483,20 @@ public class CriteriaUtils {
                 }
                 if (quantity != null) {
                     mapValue.add(quantity);
-                    logger.debug(METHODNAME, "detectedModelElementType=", detectedModelElementType, "; quantity=", quantity);
+                    logger.info(METHODNAME, "detectedModelElementType=", detectedModelElementType, "; quantity=", quantity);
                 } else if (time != null) {
                     mapValue.add(time);
-                    logger.debug(METHODNAME, "detectedModelElementType=", detectedModelElementType, "; time=", time);
+                    logger.info(METHODNAME, "detectedModelElementType=", detectedModelElementType, "; time=", time);
                 } else if (concepts != null) {
                     for (BasePredicatePartConceptDTO item : concepts) {
                         CdsCodeDTO cdsCodeDTO = item.getCdsCodeDTO();
                         OpenCdsConceptDTO openCdsConceptDTO = item.getOpenCdsConceptDTO();
                         if (cdsCodeDTO != null) {
                             mapValue.add(cdsCodeDTO);
-                            logger.debug(METHODNAME, "detectedModelElementType=", detectedModelElementType, "; cdsCodeDTO=", cdsCodeDTO);
+                            logger.info(METHODNAME, "detectedModelElementType=", detectedModelElementType, "; cdsCodeDTO=", cdsCodeDTO);
                         } else if (openCdsConceptDTO != null) {
                             mapValue.add(openCdsConceptDTO);
-                            logger.debug(METHODNAME, "detectedModelElementType=", detectedModelElementType, "; openCdsConceptDTO=", openCdsConceptDTO);
+                            logger.info(METHODNAME, "detectedModelElementType=", detectedModelElementType, "; openCdsConceptDTO=", openCdsConceptDTO);
                         } else {
                             logger.warn(METHODNAME, "BasePredicatePartConceptDTO item has no code or concept selected!");
                         }
@@ -505,20 +505,28 @@ public class CriteriaUtils {
             }
         } else if (predicateType == CriteriaPredicateType.PredicateGroup) {
             List<BaseSourcePredicateDTO> predicateDTOs = (List) baseSourcePredicateDTO.getPredicateDTOs();
-            logger.debug(METHODNAME, "processing predicate group: ", predicateDTOs);
+            logger.info(METHODNAME, "processing predicate group: ", predicateDTOs);
             for (BaseSourcePredicateDTO item : predicateDTOs) {
                 mapClinicalStatements(criteriaDTO, item, clinicalStatementMap);
             }
         }
     }
 
-    private static Map<DetectedModelElementType, List<Object>> getCriteriaDataTemplateModelElementTypeMap(
+    private static Map<DetectedModelElementType, List<Object>> getDetectedModelElementTypeMap(
             String nodeLabel,
             Map<String, Map<DetectedModelElementType, List<Object>>> clinicalStatementMap) {
-        final String METHODNAME = "getCriteriaDataTemplateModelElementTypeMap ";
+        final String METHODNAME = "getDetectedModelElementTypeMap ";
+        logger.info(METHODNAME, "nodeLabel: ", nodeLabel);
+        logger.info(METHODNAME, "clinicalStatementMap: ", clinicalStatementMap);
+        if (nodeLabel == null) {
+            throw new IllegalArgumentException("nodeLabel is null!");
+        }
+        if (clinicalStatementMap == null) {
+            throw new IllegalArgumentException("clinicalStatementMap is null!");
+        }
         Map<DetectedModelElementType, List<Object>> detectedModelElementTypeMap = null;
         for (String label : clinicalStatementMap.keySet()) {
-            logger.debug(METHODNAME, "Comparing1: ", nodeLabel, " with ", label + ".");
+            logger.info(METHODNAME, "Comparing1: ", nodeLabel, " with ", label + ".");
             if (nodeLabel.equalsIgnoreCase(label)) {
                 detectedModelElementTypeMap = clinicalStatementMap.get(label);
                 break;
@@ -527,13 +535,26 @@ public class CriteriaUtils {
         return detectedModelElementTypeMap;
     }
 
-    private static Map<DetectedModelElementType, List<Object>> getDataTemplateModelElementTypeMap(DataInputNodeDTO dataInputNodeDTO,
+    private static Map<DetectedModelElementType, List<Object>> getDetectedModelElementTypeMap(DataInputNodeDTO dataInputNodeDTO,
             Map<String, Map<DetectedModelElementType, List<Object>>> clinicalStatementMap) {
-        final String METHODNAME = "getDataTemplateModelElementTypeMap ";
+        final String METHODNAME = "getDetectedModelElementTypeMap ";
+        logger.info(METHODNAME, "dataInputNodeDTO: ", dataInputNodeDTO);
+        logger.info(METHODNAME, "clinicalStatementMap: ", clinicalStatementMap);
+        if (dataInputNodeDTO == null) {
+            throw new IllegalArgumentException("dataInputNodeDTO is null!");
+        }
+        if (clinicalStatementMap == null) {
+            throw new IllegalArgumentException("clinicalStatementMap is null!");
+        }
         Map<DetectedModelElementType, List<Object>> detectedModelElementTypeMap = null;
-
         for (String label : clinicalStatementMap.keySet()) {
-            logger.debug(METHODNAME, "Comparing2: ", dataInputNodeDTO.getNodePath(), " with ", label + ".");
+            logger.info(METHODNAME, "Comparing2: ", dataInputNodeDTO.getNodePath(), " with ", label + ".");
+            if (label == null) {
+                throw new IllegalArgumentException("label is null!");
+            }
+            if (dataInputNodeDTO.getNodePath() == null) {
+                throw new IllegalArgumentException("dataInputNodeDTO.getNodePath() is null!");
+            }
             if (dataInputNodeDTO.getNodePath().startsWith(label + ".")) {
                 detectedModelElementTypeMap = clinicalStatementMap.get(label);
                 break;
@@ -556,9 +577,9 @@ public class CriteriaUtils {
 
         dataInputNodeDTO.getTemplateClassName();
         String className = dataInputNodeDTO.getTemplateName();
-        logger.debug(METHODNAME, "Considering: ", className);
+        logger.info(METHODNAME, "Considering: ", className);
         for (DetectedModelElementType modelElementType : DetectedModelElementType.values()) {
-            logger.debug(METHODNAME, "comparing root class ", className, " to ", modelElementType.getClinicalStatementClass().getSimpleName(),
+            logger.info(METHODNAME, "comparing root class ", className, " to ", modelElementType.getClinicalStatementClass().getSimpleName(),
                     " and ", dataInputNodeDTO.getNodePath(), " to ", modelElementType.getMatchString());
             if (className.contains(modelElementType.getClinicalStatementClass().getSimpleName())
                     && dataInputNodeDTO.getNodePath().contains(modelElementType.getMatchString())) {
@@ -576,8 +597,8 @@ public class CriteriaUtils {
 
     public static void cleanUpPartConceptSelections(BasePredicatePartDTO baseDTO) {
         final String METHODNAME = "cleanUpPartConceptSelections ";
-        logger.trace(METHODNAME, "baseDTO.getDataInputClassType()=", baseDTO.getDataInputClassType());
-        logger.trace(METHODNAME, "baseDTO.getConceptSelectionType()=", baseDTO.getConceptSelectionType());
+        logger.info(METHODNAME, "baseDTO.getDataInputClassType()=", baseDTO.getDataInputClassType());
+        logger.info(METHODNAME, "baseDTO.getConceptSelectionType()=", baseDTO.getConceptSelectionType());
         if (baseDTO.getDataInputClassType() == DataModelClassType.Concept) {
             if (baseDTO.getConceptSelectionType() == ConceptSelectionType.Concept) {
                 CriteriaUtils.deleteSelections(baseDTO.getPredicatePartConceptDTOs(), ConceptSelectionType.Code);
@@ -711,29 +732,29 @@ public class CriteriaUtils {
     private static void logResult(List<? extends BasePredicatePartConceptDTO> concepts, PQ quantity, IVLTS time) {
         final String METHODNAME = "logResult ";
         if (concepts == null) {
-            logger.debug(METHODNAME, "found concepts: none");
+            logger.info(METHODNAME, "found concepts: none");
         } else {
             for (BasePredicatePartConceptDTO item : concepts) {
                 CdsCodeDTO cdsCodeDTO = item.getCdsCodeDTO();
                 OpenCdsConceptDTO openCdsConceptDTO = item.getOpenCdsConceptDTO();
                 if (cdsCodeDTO != null) {
-                    logger.debug(METHODNAME, "found code item: ", cdsCodeDTO.getLabel());
+                    logger.info(METHODNAME, "found code item: ", cdsCodeDTO.getLabel());
                 } else if (openCdsConceptDTO != null) {
-                    logger.debug(METHODNAME, "found concept item: ", openCdsConceptDTO.getLabel());
+                    logger.info(METHODNAME, "found concept item: ", openCdsConceptDTO.getLabel());
                 } else {
                     logger.warn(METHODNAME, "found item with no concept or code!");
                 }
             }
         }
         if (quantity == null) {
-            logger.debug(METHODNAME, "found quantity: none");
+            logger.info(METHODNAME, "found quantity: none");
         } else {
-            logger.debug(METHODNAME, "found quantity: ", quantity.getValue(), " ", quantity.getUnit());
+            logger.info(METHODNAME, "found quantity: ", quantity.getValue(), " ", quantity.getUnit());
         }
         if (time == null) {
-            logger.debug(METHODNAME, "found time: none");
+            logger.info(METHODNAME, "found time: none");
         } else {
-            logger.debug(METHODNAME, "found time: ", time.getHigh(), " ", time.getLow());
+            logger.info(METHODNAME, "found time: ", time.getHigh(), " ", time.getLow());
         }
     }
 

@@ -39,17 +39,17 @@ import org.cdsframework.annotation.Table;
 import org.cdsframework.aspect.annotations.PropertyListener;
 import org.cdsframework.base.BaseDTO;
 import org.cdsframework.enumeration.GenerationSource;
-import org.cdsframework.util.comparator.DataTemplateNodeRelComparator;
+import org.cdsframework.util.comparator.DataInputNodeComparator;
 
 /**
  *
  * @author HLN Consulting, LLC
  */
 @Entity
-@OrderBy(comparator = DataTemplateNodeRelComparator.class)
+@OrderBy(comparator = DataInputNodeComparator.class)
 @Table(databaseId = "CDS", name = "data_input_node")
 @JndiReference(root = "mts-ejb-cds")
-@Permission(name = "Data Template Node Relationship", isListed = false)
+@Permission(name = "Data Input Node", isListed = false)
 public class DataInputNodeDTO extends BaseDTO {
 
     private static final long serialVersionUID = 8260365417310511301L;

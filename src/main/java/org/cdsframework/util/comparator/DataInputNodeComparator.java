@@ -34,7 +34,7 @@ import org.cdsframework.dto.DataInputNodeDTO;
  *
  * @author HLN Consulting, LLC
  */
-public class DataTemplateNodeRelComparator implements Comparator<DataInputNodeDTO> {
+public class DataInputNodeComparator implements Comparator<DataInputNodeDTO> {
 
     @Override
     public int compare(DataInputNodeDTO o1, DataInputNodeDTO o2) {

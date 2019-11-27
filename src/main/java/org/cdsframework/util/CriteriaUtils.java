@@ -564,11 +564,10 @@ public class CriteriaUtils {
     }
 
     /**
-     * Determine the type of the CriteriaDataTemplateRelNodeDTO but looking it
+     * Determine the type of the DataInputNodeDTO but looking it
      * up in the DetectedModelElementType enumeration.
      *
-     * @param criteriaDTO
-     * @param criteriaDataTemplateRelNodeDTO
+     * @param DataInputNodeDTO
      * @return
      */
     private static DetectedModelElementType geDetectedModelElementType(DataInputNodeDTO dataInputNodeDTO) {

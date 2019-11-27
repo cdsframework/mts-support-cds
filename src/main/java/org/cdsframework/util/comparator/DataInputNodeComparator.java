@@ -28,16 +28,16 @@
 package org.cdsframework.util.comparator;
 
 import java.util.Comparator;
-import org.cdsframework.dto.DataModelClassDTO;
+import org.cdsframework.dto.DataInputNodeDTO;
 
 /**
  *
  * @author HLN Consulting, LLC
  */
-public class DataModelClassComparator implements Comparator<DataModelClassDTO> {
+public class DataInputNodeComparator implements Comparator<DataInputNodeDTO> {
 
     @Override
-    public int compare(DataModelClassDTO o1, DataModelClassDTO o2) {
+    public int compare(DataInputNodeDTO o1, DataInputNodeDTO o2) {
         if (o1 == null && o2 == null) {
             return 0;
         }
@@ -47,16 +47,15 @@ public class DataModelClassComparator implements Comparator<DataModelClassDTO> {
         if (o1 != null && o2 == null) {
             return 1;
         }
-        if (o1.getName()== null && o2.getName() == null) {
+        if (o1.getTemplateClassName()== null && o2.getTemplateClassName() == null) {
             return 0;
         }
-        if (o1.getName() == null && o2.getName() != null) {
+        if (o1.getTemplateClassName() == null && o2.getTemplateClassName() != null) {
             return -1;
         }
-        if (o1.getName() != null && o2.getName() == null) {
+        if (o1.getTemplateClassName() != null && o2.getTemplateClassName() == null) {
             return 1;
         }
-        return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
+        return o1.getTemplateClassName().compareTo(o1.getTemplateClassName());
     }
-    
 }

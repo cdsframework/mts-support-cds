@@ -83,13 +83,34 @@ public class CriteriaPredicatePartDTO extends BasePredicatePartDTO {
     @NotNull
     private PredicatePartType partType;
     @ReferenceDTO
-    @Column(name = "node_rel_id")
-    private CriteriaDataTemplateRelNodeDTO criteriaDataTemplateRelNodeDTO;
+    @Column(name = "node_id")
+    private DataInputNodeDTO dataInputNodeDTO;
     @NotNull
     private int predicatePartOrder;
     private ConceptSelectionType conceptSelectionType;
     private DataModelClassType dataInputClassType;
     private CriteriaResourceType resourceType;
+    @Size(max = 2048)
+    private String nodeLabel;
+
+    /**
+     * Get the value of nodeLabel
+     *
+     * @return the value of nodeLabel
+     */
+    public String getNodeLabel() {
+        return nodeLabel;
+    }
+
+    /**
+     * Set the value of nodeLabel
+     *
+     * @param nodeLabel new value of nodeLabel
+     */
+    @PropertyListener
+    public void setNodeLabel(String nodeLabel) {
+        this.nodeLabel = nodeLabel;
+    }
 
     /**
      * Get the value of resourceType
@@ -193,23 +214,23 @@ public class CriteriaPredicatePartDTO extends BasePredicatePartDTO {
     }
 
     /**
-     * Get the value of criteriaDataTemplateRelNodeDTO
+     * Get the value of dataInputNodeDTO
      *
-     * @return the value of criteriaDataTemplateRelNodeDTO
+     * @return the value of dataInputNodeDTO
      */
     @Override
-    public CriteriaDataTemplateRelNodeDTO getCriteriaDataTemplateRelNodeDTO() {
-        return criteriaDataTemplateRelNodeDTO;
+    public DataInputNodeDTO getDataInputNodeDTO() {
+        return dataInputNodeDTO;
     }
 
     /**
-     * Set the value of criteriaDataTemplateRelNodeDTO
+     * Set the value of dataInputNodeDTO
      *
-     * @param criteriaDataTemplateRelNodeDTO new value of criteriaDataTemplateRelNodeDTO
+     * @param dataInputNodeDTO new value of dataInputNodeDTO
      */
     @PropertyListener
-    public void setCriteriaDataTemplateRelNodeDTO(CriteriaDataTemplateRelNodeDTO criteriaDataTemplateRelNodeDTO) {
-        this.criteriaDataTemplateRelNodeDTO = criteriaDataTemplateRelNodeDTO;
+    public void setDataInputNodeDTO(DataInputNodeDTO dataInputNodeDTO) {
+        this.dataInputNodeDTO = dataInputNodeDTO;
     }
 
     /**

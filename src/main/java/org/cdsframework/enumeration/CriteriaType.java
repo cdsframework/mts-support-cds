@@ -40,7 +40,7 @@ public enum CriteriaType {
     IMAGING("Imaging"),
     IMMUNIZATION("Immunization"),
     LABORATORY("Laboratory"),
-    MEDICAL_EXAMINER("Medical Examiner"),
+    PATHOLOGY("Pathology"),
     MEDICATION("Medication"),
     SUBORDINATE("Subordinate"),
     TESTCASE("TestCase"),

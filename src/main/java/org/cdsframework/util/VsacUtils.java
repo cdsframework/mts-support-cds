@@ -33,12 +33,16 @@ package org.cdsframework.util;
 
 import ihe.iti.svs._2008.RetrieveMultipleValueSetsResponse;
 import ihe.iti.svs._2008.RetrieveMultipleValueSetsResponse.DescribedValueSet;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.ClientRequestContext;
+import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
@@ -67,7 +71,7 @@ public class VsacUtils {
         return UriBuilder.fromUri(baseUri).build();
     }
 
-    public static String getNewTicketGrantingTicket(String baseUri, String username, String password)
+    public static String getNewTicketGrantingTicket(String baseUri, String apiKey)
             throws MtsException {
 
         final String METHODNAME = "getNewTicketGrantingTicket ";
@@ -90,11 +94,10 @@ public class VsacUtils {
 
             // Get the response...
             Form form = new Form();
+            form.param("apikey", apiKey);
             response = target.
                     path("ws").
                     path("Ticket").
-                    queryParam("username", username).
-                    queryParam("password", password).
                     request().
                     post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED), Response.class);
 
@@ -120,7 +123,7 @@ public class VsacUtils {
         return value;
     }
 
-    public static String getServiceTicket(String baseUri, String username, String password)
+    public static String getServiceTicket(String baseUri, String apiKey)
             throws MtsException {
 
         final String METHODNAME = "getServiceTicket ";
@@ -136,7 +139,7 @@ public class VsacUtils {
             client.property(connectTimeoutProperty, CONNECT_TIMEOUT);
             client.property(requestTimeoutProperty, REQUEST_TIMEOUT);
             WebTarget target = client.target(uri);
-            String ticketGrantingTicket = getNewTicketGrantingTicket(baseUri, username, password);
+            String ticketGrantingTicket = getNewTicketGrantingTicket(baseUri, apiKey);
 
             // Get the response...
             Form form = new Form();
@@ -170,7 +173,7 @@ public class VsacUtils {
         return value;
     }
 
-    public static List<String> getProfileList(String baseUri, String username, String password)
+    public static List<String> getProfileList(String baseUri, String apiKey)
             throws MtsException {
 
         final String METHODNAME = "getProfileList ";
@@ -186,7 +189,7 @@ public class VsacUtils {
             client.property(connectTimeoutProperty, CONNECT_TIMEOUT);
             client.property(requestTimeoutProperty, REQUEST_TIMEOUT);
             WebTarget target = client.target(uri);
-            String serviceTicket = getServiceTicket(baseUri, username, password);
+            String serviceTicket = getServiceTicket(baseUri, apiKey);
 
             // Get the response...
             response = target.
@@ -221,7 +224,7 @@ public class VsacUtils {
         }
     }
 
-    public static List<String> getVersionList(String baseUri, String username, String password, String oid)
+    public static List<String> getVersionList(String baseUri, String apiKey, String oid)
             throws MtsException {
 
         final String METHODNAME = "getVersionList ";
@@ -242,7 +245,7 @@ public class VsacUtils {
             client.property(connectTimeoutProperty, CONNECT_TIMEOUT);
             client.property(requestTimeoutProperty, REQUEST_TIMEOUT);
             WebTarget target = client.target(uri);
-            String serviceTicket = getServiceTicket(baseUri, username, password);
+            String serviceTicket = getServiceTicket(baseUri, apiKey);
 
             logger.info(METHODNAME, "Service Ticket: ", serviceTicket);
 
@@ -293,7 +296,7 @@ public class VsacUtils {
         }
     }
 
-    public static RetrieveMultipleValueSetsResponse getValueSetByOidAndProfile(String baseUri, String username, String password, String oid, String profile, boolean includeDraft)
+    public static RetrieveMultipleValueSetsResponse getValueSetByOidAndProfile(String baseUri, String apiKey, String oid, String profile, boolean includeDraft)
             throws MtsException {
 
         final String METHODNAME = "getValueSetByOidAndVersion ";
@@ -310,7 +313,7 @@ public class VsacUtils {
             client.property(connectTimeoutProperty, CONNECT_TIMEOUT);
             client.property(requestTimeoutProperty, REQUEST_TIMEOUT);
             WebTarget target = client.target(uri);
-            String serviceTicket = getServiceTicket(baseUri, username, password);
+            String serviceTicket = getServiceTicket(baseUri, apiKey);
 
             // Get the response...
             if (includeDraft == true) {
@@ -358,7 +361,7 @@ public class VsacUtils {
         return value;
     }
 
-    public static RetrieveMultipleValueSetsResponse getValueSetByOidAndVersion(String baseUri, String username, String password, String oid, String version)
+    public static RetrieveMultipleValueSetsResponse getValueSetByOidAndVersion(String baseUri, String apiKey, String oid, String version)
             throws MtsException {
 
         final String METHODNAME = "getValueSetByOidAndVersion ";
@@ -374,7 +377,7 @@ public class VsacUtils {
             client.property(connectTimeoutProperty, CONNECT_TIMEOUT);
             client.property(requestTimeoutProperty, REQUEST_TIMEOUT);
             WebTarget target = client.target(uri);
-            String serviceTicket = getServiceTicket(baseUri, username, password);
+            String serviceTicket = getServiceTicket(baseUri, apiKey);
 
             // Get the response...
             response = target.

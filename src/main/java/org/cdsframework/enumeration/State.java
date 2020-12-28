@@ -91,7 +91,17 @@ public enum State {
     WASHINGTON("Washington", "WA"),
     WEST_VIRGINIA("West Virginia", "WV"),
     WISCONSIN("Wisconsin", "WI"),
-    WYOMING("Wyoming", "WY");
+    WYOMING("Wyoming", "WY"),
+    X_TEST0("Test Jurisdiction 0", "X0"),
+    X_TEST1("Test Jurisdiction 1", "X1"),
+    X_TEST2("Test Jurisdiction 2", "X2"),
+    X_TEST3("Test Jurisdiction 3", "X3"),
+    X_TEST4("Test Jurisdiction 4", "X4"),
+    X_TEST5("Test Jurisdiction 5", "X5"),
+    X_TEST6("Test Jurisdiction 6", "X6"),
+    X_TEST7("Test Jurisdiction 7", "X7"),
+    X_TEST8("Test Jurisdiction 8", "X8"),
+    X_TEST9("Test Jurisdiction 9", "X9");
 
     /**
      * The state's label.
